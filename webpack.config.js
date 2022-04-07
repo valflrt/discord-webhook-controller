@@ -31,5 +31,11 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    compress: true,
+    allowedHosts: [
+      "3000-valflrt-discordwebhookc-fckl5d6pr8s.ws-eu38.gitpod.io",
+    ],
+  },
   devtool: prod ? undefined : "source-map",
 };
