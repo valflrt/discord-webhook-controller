@@ -5,6 +5,130 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Discord Webhook Controller</title>
+
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+
+        padding: 0;
+        margin: 0;
+      }
+
+      * {
+        color: hsl(267, 100%, 92%);
+        box-sizing: border-box;
+        outline: none;
+      }
+
+      *:focus {
+        outline: 1px solid hsl(267, 100%, 60%);
+      }
+
+      body {
+        padding: 20px;
+
+        background-color: hsl(267, 5%, 10%);
+      }
+
+      input,
+      button {
+        background-color: hsl(267, 5%, 15%);
+        border: 1px solid hsl(267, 100%, 92%);
+      }
+
+      button {
+        padding: 4px;
+      }
+
+      input {
+        width: 300px;
+        padding: 4px 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <h1>Discord Webhook Controller</h1>
+
+    <section>
+      <p>Webhook URL:</p>
+      <input id="wh-url-input" type="text" />
+      <p id="wh-url-info" class="info hidden">
+        Webhook URL set as: <code></code>
+      </p>
+
+      <script>
+        let whUrlInput = document.getElementById("wh-url-input");
+
+        let displayWhUrl = () => {
+          let infoBox = document.getElementById("wh-url-info");
+          if (localStorage.getItem("wh-url")) {
+            infoBox.classList.remove("hidden");
+            document.querySelector("#wh-url-info > code").innerHTML =
+              localStorage.getItem("wh-url");
+          } else infoBox.classList.add("hidden");
+        };
+
+        displayWhUrl();
+        if (localStorage.getItem("wh-url"))
+          whUrlInput.value = localStorage.getItem("wh-url");
+
+        whUrlInput.addEventListener("input", () => {
+          localStorage.setItem("wh-url", whUrlInput.value);
+          displayWhUrl();
+        });
+      </script>
+    </section>
+
+    <section>
+      <h2>Send message (content)</h2>
+      <p>Message content:</p>
+      <input id="wh-content-text-input" type="text" />
+      <button id="wh-content-text-send">Send</button>
+      <p id="wh-content-text-info" class="info hidden"></p>
+
+      <script>
+        let whContentTextInput = document.getElementById(
+          "wh-content-text-input"
+        );
+        let whContentTextSendButton = document.getElementById(
+          "wh-content-text-send"
+        );
+
+        whContentTextSendButton.addEventListener("click", () => {
+          let infoBox = document.getElementById("wh-content-text-info");
+
+          infoBox.classList.remove("hidden");
+          infoBox.innerHTML = "Sending...";
+
+          fetch(localStorage.getItem("wh-url"), {
+            method: "post",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              tts: false,
+              content: whContentTextInput.value,
+            }),
+          })
+            .then((res) => {
+              res.ok
+                ? (infoBox.innerHTML = "Message sent successfully !")
+                : (infoBox.innerHTML = `Failed to send message: <code>${
+                    res.status
+                  }${res.statusText ? `: ${res.statusText}` : ""}</code>`);
+            })
+            .catch((err) => {
+              infoBox.innerHTML = `Failed to send message: <code>${err}</code>`;
+            });
+        });
+      </script>
+    </section>
+  </body>
 </html>
