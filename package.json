@@ -4,7 +4,7 @@
   "scripts": {
     "start": "webpack serve --config ./webpack.config.js --mode development --port 3000",
     "build": "webpack --config ./webpack.config.js --mode production",
-    "deploy": "node ./scripts/deploy.js"
+    "deploy": "npm run build && node ./scripts/deploy.js"
   },
   "author": "valflrt",
   "license": "ISC",
