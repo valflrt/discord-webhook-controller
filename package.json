@@ -3,7 +3,8 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "webpack serve --config ./webpack.config.js --mode development --port 3000",
-    "build": "webpack --config ./webpack.config.js --mode production"
+    "build": "webpack --config ./webpack.config.js --mode production",
+    "deploy": "node ./scripts/deploy.js"
   },
   "author": "valflrt",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.24",
     "css-loader": "^6.5.1",
+    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.0",
     "ts-loader": "^9.2.6",
