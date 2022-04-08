@@ -21,6 +21,17 @@ export default () => {
     else setReadyToSendMessage(false);
   }, [inputValue]);
 
+  useEffect(() => {
+    setTimeout(
+      () =>
+        setInfo({
+          message: "",
+          error: false,
+        }),
+      5000
+    );
+  }, [info]);
+
   let fetchApiToSendMessage = () =>
     fetch(localStorage.getItem("webhook-url") ?? "", {
       method: "post",
