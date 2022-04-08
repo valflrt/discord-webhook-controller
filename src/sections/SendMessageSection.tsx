@@ -6,7 +6,10 @@ export default () => {
   let [inputValue, setInputValue] = useState("");
   let [messageText, setMessageText] = useState<null | string>();
   let [readyToSendMessage, setReadyToSendMessage] = useState(false);
-  let [errorMessage, setErrorMessage] = useState<null | string | JSX.Element>();
+  let [info, setInfo] = useState<{
+    message: string | JSX.Element;
+    error?: boolean;
+  }>({ message: "" });
 
   useEffect(() => {
     if (inputValue == "") {
@@ -31,26 +34,35 @@ export default () => {
       }),
     })
       .then((res) => {
-        setErrorMessage(
-          res.ok ? (
-            "Message Sent Successfully"
-          ) : (
-            <>
-              Failed to send message:{" "}
-              <code>
-                {res.status}
-                {res.statusText ? ` - ${res.statusText}` : ""}
-              </code>
-            </>
-          )
+        setInfo(
+          res.ok
+            ? {
+                message: "Message Sent Successfully",
+                error: false,
+              }
+            : {
+                message: (
+                  <>
+                    Failed to send message:{" "}
+                    <code>
+                      {res.status}
+                      {res.statusText ? ` - ${res.statusText}` : ""}
+                    </code>
+                  </>
+                ),
+                error: true,
+              }
         );
       })
       .catch((err) => {
-        setErrorMessage(
-          <>
-            Failed to send message: <code>{err}</code>
-          </>
-        );
+        setInfo({
+          message: (
+            <>
+              Failed to send message: <code>{`${err}`}</code>
+            </>
+          ),
+          error: true,
+        });
       });
 
   return (
@@ -63,12 +75,15 @@ export default () => {
         onInput={(e: ChangeEvent<HTMLInputElement>) =>
           setInputValue(e.target.value)
         }
+        onKeyUp={(e) => (e.key === "Enter" ? fetchApiToSendMessage() : null)}
       />
       <button onClick={fetchApiToSendMessage} disabled={!readyToSendMessage}>
         Send
       </button>
-      {errorMessage ? (
-        <p style={{ color: "var(--error)" }}>{errorMessage}</p>
+      {info ? (
+        <p style={info.error ? { color: "var(--error)" } : {}}>
+          {info.message}
+        </p>
       ) : null}
     </Section>
   );
