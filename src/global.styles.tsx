@@ -47,6 +47,7 @@ export default createGlobalStyle`
   button {
     background-color: var(--tone-3);
     border: 1px solid var(--tone-1);
+    margin: 2px;
   }
 
   button {
