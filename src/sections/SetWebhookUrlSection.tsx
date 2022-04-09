@@ -18,7 +18,7 @@ export default () => {
         message: "",
         type: null,
       });
-    } else if (!/https:\/\/discord.com\/api\/webhook(\/?)/g.test(inputValue)) {
+    } else if (!/https:\/\/discord.com\/api\/webhooks(\/?)/g.test(inputValue)) {
       localStorage.removeItem("webhook-url");
       setInfo({
         message: (
