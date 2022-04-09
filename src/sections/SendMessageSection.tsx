@@ -8,7 +8,7 @@ export default () => {
   let [info, setInfo] = useState<{
     message: string | JSX.Element;
     type?: "error" | "success" | null | undefined;
-  }>({ message: "" });
+  }>({ message: "", type: null });
 
   useEffect(() => {
     if (inputValue !== "" && localStorage.getItem("webhook-url"))
