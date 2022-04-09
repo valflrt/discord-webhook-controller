@@ -25,7 +25,7 @@ export default () => {
           <>
             Malformed url ! Expecting discord webhook url (eg:{" "}
             <code>
-              https://discord.com/api/webhook/[webhook id]/[webhook token]
+              https://discord.com/api/webhooks/[webhook id]/[webhook token]
             </code>
             )
           </>
