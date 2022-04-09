@@ -11,7 +11,7 @@ export default () => {
   useEffect(() => {
     if (!/https:\/\/discord.com\/api\/webhook(\/?)/g.test(inputValue)) {
       setError(
-        "Malformed url ! Expecting discord webhook url ( eg: https://discord.com/api/webhook/... )"
+        "Malformed url ! Expecting discord webhook url ( eg: https://discord.com/api/webhook/<webhook id>/<webhook token> )"
       );
       return;
     } else setError(false);
