@@ -29,6 +29,7 @@ export default () => {
       }),
     })
       .then((res) => {
+        if (res.ok) setInputValue("");
         setInfo(
           res.ok
             ? {
