@@ -8,7 +8,7 @@ export default () => {
   let [readyToSendMessage, setReadyToSendMessage] = useState(false);
   let [info, setInfo] = useState<{
     message: string | JSX.Element;
-    error?: boolean;
+    type?: "error" | "success" | null | undefined;
   }>({ message: "" });
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default () => {
       () =>
         setInfo({
           message: "",
-          error: false,
+          type: null,
         }),
       5000
     );
@@ -49,7 +49,7 @@ export default () => {
           res.ok
             ? {
                 message: "Message Sent Successfully",
-                error: false,
+                type: "success",
               }
             : {
                 message: (
@@ -61,7 +61,7 @@ export default () => {
                     </code>
                   </>
                 ),
-                error: true,
+                type: "error",
               }
         );
       })
@@ -72,7 +72,7 @@ export default () => {
               Failed to send message: <code>{`${err}`}</code>
             </>
           ),
-          error: true,
+          type: "error",
         });
       });
 
@@ -80,22 +80,31 @@ export default () => {
     <Section>
       <h2>Send message (text)</h2>
       <p>Message text:</p>
-      <input
-        value={inputValue}
-        type="text"
-        onInput={(e: ChangeEvent<HTMLInputElement>) =>
-          setInputValue(e.target.value)
-        }
-        onKeyUp={(e) => (e.key === "Enter" ? fetchApiToSendMessage() : null)}
-      />
-      <button onClick={fetchApiToSendMessage} disabled={!readyToSendMessage}>
-        Send
-      </button>
-      {info ? (
-        <p style={info.error ? { color: "var(--error)" } : {}}>
-          {info.message}
-        </p>
-      ) : null}
+      <div className="align row">
+        <textarea
+          value={inputValue}
+          rows={4}
+          onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            setInputValue(e.target.value)
+          }
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              fetchApiToSendMessage();
+            }
+          }}
+        />
+        <button onClick={fetchApiToSendMessage} disabled={!readyToSendMessage}>
+          Send
+        </button>
+      </div>
+
+      <p className="grey">
+        You can skip a line without sending the message by pressing{" "}
+        <code>Shift + Enter</code>
+      </p>
+
+      {info.type !== null ? <p className={info.type}>{info.message}</p> : null}
     </Section>
   );
 };
