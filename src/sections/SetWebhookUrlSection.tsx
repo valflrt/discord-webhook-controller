@@ -6,17 +6,43 @@ export default () => {
   let [inputValue, setInputValue] = useState(
     localStorage.getItem("webhook-url") ?? ""
   );
-  let [error, setError] = useState<string | boolean>(false);
+  let [info, setInfo] = useState<{
+    message: string | JSX.Element;
+    type?: "error" | "success" | null | undefined;
+  }>({ message: "" });
 
   useEffect(() => {
-    if (!/https:\/\/discord.com\/api\/webhook(\/?)/g.test(inputValue)) {
-      setError(
-        "Malformed url ! Expecting discord webhook url ( eg: https://discord.com/api/webhook/<webhook id>/<webhook token> )"
-      );
-      return;
-    } else setError(false);
-
-    localStorage.setItem("webhook-url", inputValue);
+    if (inputValue === "") {
+      localStorage.removeItem("webhook-url");
+      setInfo({
+        message: "",
+        type: null,
+      });
+    } else if (!/https:\/\/discord.com\/api\/webhook(\/?)/g.test(inputValue)) {
+      localStorage.removeItem("webhook-url");
+      setInfo({
+        message: (
+          <>
+            Malformed url ! Expecting discord webhook url (eg:{" "}
+            <code>
+              https://discord.com/api/webhook/[webhook id]/[webhook token]
+            </code>
+            )
+          </>
+        ),
+        type: "error",
+      });
+    } else {
+      localStorage.setItem("webhook-url", inputValue);
+      setInfo({
+        message: (
+          <>
+            Webhook URL set as: <code>{inputValue}</code>
+          </>
+        ),
+        type: "success",
+      });
+    }
   }, [inputValue]);
 
   return (
@@ -30,16 +56,7 @@ export default () => {
           setInputValue(e.target.value)
         }
       />
-      {inputValue && error === false ? (
-        <p>
-          Webhook URL set as: <code>{inputValue}</code>
-        </p>
-      ) : null}
-      {error ? (
-        <p style={{ color: "var(--error)" }}>
-          {error !== true ? error : "Unknown Error !"}
-        </p>
-      ) : null}
+      {info.type !== null ? <p className={info.type}>{info.message}</p> : null}
     </Section>
   );
 };

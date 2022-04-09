@@ -4,7 +4,6 @@ import Section from "../components/Section";
 
 export default () => {
   let [inputValue, setInputValue] = useState("");
-  let [messageText, setMessageText] = useState<null | string>();
   let [readyToSendMessage, setReadyToSendMessage] = useState(false);
   let [info, setInfo] = useState<{
     message: string | JSX.Element;
@@ -12,25 +11,10 @@ export default () => {
   }>({ message: "" });
 
   useEffect(() => {
-    if (inputValue == "") {
-      setMessageText(null);
-      return;
-    } else setMessageText(inputValue);
-    if (messageText && localStorage.getItem("webhook-url"))
+    if (inputValue !== "" && localStorage.getItem("webhook-url"))
       setReadyToSendMessage(true);
     else setReadyToSendMessage(false);
   }, [inputValue]);
-
-  useEffect(() => {
-    setTimeout(
-      () =>
-        setInfo({
-          message: "",
-          type: null,
-        }),
-      5000
-    );
-  }, [info]);
 
   let fetchApiToSendMessage = () =>
     fetch(localStorage.getItem("webhook-url") ?? "", {
@@ -41,7 +25,7 @@ export default () => {
       },
       body: JSON.stringify({
         tts: false,
-        content: messageText,
+        content: inputValue,
       }),
     })
       .then((res) => {
@@ -90,7 +74,7 @@ export default () => {
           onKeyPress={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
-              fetchApiToSendMessage();
+              if (readyToSendMessage) fetchApiToSendMessage();
             }
           }}
         />
