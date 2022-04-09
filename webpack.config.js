@@ -1,19 +1,25 @@
-const prod = process.env.NODE_ENV === "production";
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
+const prod = process.env.NODE_ENV === "production";
+
+const buildPath = `${__dirname}/build/`;
 
 module.exports = {
   mode: prod ? "production" : "development",
   entry: "./src/index.tsx",
   output: {
-    path: `${__dirname}/build/`,
+    path: buildPath,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: `${__dirname}/public/index.html`,
+      template: `${__dirname}/src/index.html`,
     }),
     new MiniCssExtractPlugin.default(),
+    new CopyPlugin({
+      patterns: [{ from: `${__dirname}/public/`, to: buildPath }],
+    }),
   ],
   module: {
     rules: [
