@@ -16,6 +16,18 @@ export default () => {
     else setReadyToSendMessage(false);
   }, [inputValue]);
 
+  let timer: NodeJS.Timeout;
+
+  useEffect(() => {
+    if (info.type) {
+      clearTimeout(timer);
+      timer = setTimeout(
+        () => setInfo({ message: "", type: null }),
+        2.5e3 /*8 seconds*/
+      );
+    }
+  }, [info]);
+
   let fetchApiToSendMessage = () =>
     fetch(localStorage.getItem("webhook-url") ?? "", {
       method: "post",
