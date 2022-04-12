@@ -1,9 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, HTMLProps } from "react";
 
-import SectionStyles from "./Section.styles";
-
-let Section: FC = ({ children }) => {
-  return <SectionStyles.Section tabIndex={0}>{children}</SectionStyles.Section>;
+let Section: FC<HTMLProps<HTMLTableSectionElement>> = ({
+  children,
+  tabIndex = 0,
+}) => {
+  return <section tabIndex={tabIndex}>{children}</section>;
 };
 
 export default Section;

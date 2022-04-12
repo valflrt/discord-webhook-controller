@@ -1,14 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Index from "./pages/Main";
+import Main from "./pages/Main";
 
-import GlobalStyles from "./global.styles";
+import "./global.css";
 
-ReactDOM.render(
-  <>
-    <GlobalStyles />
-    <Index />
-  </>,
-  document.getElementById("root")
-);
+ReactDOM.render(<Main />, document.getElementById("root"));
