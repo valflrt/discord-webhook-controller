@@ -33,7 +33,7 @@ export default () => {
       .then((res) => {
         setErrorMessage(
           res.ok ? (
-            "Message Sent Successfully"
+            "Message sent successfully"
           ) : (
             <>
               Failed to send message:{" "}
