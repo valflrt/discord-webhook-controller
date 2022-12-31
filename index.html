@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DWC</title>
+    <script type="module" crossorigin src="/assets/index-e262f56c.js"></script>
+    <link rel="stylesheet" href="/assets/index-58becff2.css">
+  </head>
+  <body class="dark">
+    <div class="content">
+      <h1>Discord Webhook Controller</h1>
+      <section id="setWebhookUrl">
+        <h2>Set webhook url</h2>
+        <section>
+          <p>Webhook URL:</p>
+          <input type="text" class="webhookUrlInput" />
+          <p class="info"></p>
+        </section>
+      </section>
+
+      <section id="sendMessage">
+        <h2>Send message (text)</h2>
+        <section>
+          <p>Message text:</p>
+          <div class="box row centerStart gap">
+            <textarea class="messageInput" rows="3" cols="30"></textarea>
+            <button class="sendButton" disabled>Send</button>
+          </div>
+
+          <p class="grey">
+            You can skip a line without sending the message by pressing
+            <code>Shift + Enter</code>
+          </p>
+
+          <p class="info hidden"></p>
+        </section>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
