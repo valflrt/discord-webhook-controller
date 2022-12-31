@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono&family=Open+Sans&display=swap");
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: rgba(160, 160, 250, 0.25);
+}
+
+::-moz-selection {
+  background-color: rgba(160, 160, 250, 0.25);
+}
+
+body {
+  font-family: "Open Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body.dark {
+  color: rgb(220, 220, 230);
+  background-color: rgb(40, 40, 50);
+}
+body.light {
+  color: rgb(40, 40, 50);
+  background-color: rgb(240, 240, 250);
+}
+
+body > div.content {
+  padding: 4% calc(4% * 1.618); /* lol */
+}
+body.mobile > div.content {
+  padding: 10px 20px 40px;
+}
+
+body > div.content section {
+  padding-left: 6px;
+}
+
+a {
+  color: rgb(160, 160, 250);
+}
+
+input {
+  width: 300px;
+}
+
+input,
+button,
+textarea {
+  border: 2px solid rgb(100, 100, 120);
+  outline: none;
+}
+body.dark input,
+body.dark button,
+body.dark textarea {
+  color: rgb(220, 220, 230);
+  background: rgb(40, 40, 50);
+}
+body.light input,
+body.light button,
+body.light textarea {
+  color: rgb(40, 40, 50);
+  background: rgb(220, 220, 230);
+}
+
+button {
+  transition: border 100ms;
+}
+input,
+textarea {
+  transition: border 200ms;
+}
+
+input:focus,
+textarea:focus,
+button:active,
+button.active {
+  border: 2px solid rgb(160, 160, 250);
+}
+
+.box {
+  padding: 5px;
+  display: flex;
+}
+.box.row {
+  flex-flow: row nowrap;
+}
+.box.column {
+  flex-flow: column nowrap;
+}
+.box.centerStart {
+  align-items: center;
+  justify-content: flex-start;
+}
+.box.centerEnd {
+  align-items: center;
+  justify-content: flex-end;
+}
+.box.startCenter {
+  align-items: flex-start;
+  justify-content: center;
+}
+.box.endCenter {
+  align-items: end;
+  justify-content: center;
+}
+.box.gap {
+  gap: 8px;
+}
+
+.success {
+  color: rgb(92, 230, 138);
+}
+
+.error {
+  color: rgb(230, 92, 133);
+}
+
+.hidden {
+  display: none;
+}
