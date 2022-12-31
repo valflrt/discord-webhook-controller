@@ -1,3 +1,12 @@
 import { defineConfig } from "vite";
 
-export default defineConfig({});
+let root = __dirname;
+
+export default defineConfig({
+  mode: process.env.MODE,
+  root,
+  build: {
+    outDir: "build",
+    emptyOutDir: true,
+  },
+});
