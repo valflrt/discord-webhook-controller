@@ -51,7 +51,7 @@ webhookUrlInput.addEventListener("input", () => {
   } else {
     localStorage.setItem("webhook-url", webhookUrlInput.value);
     setInfo(
-      fmt`Webhook URL set as: ${[ellipsis(webhookUrlInput.value), "code"]}`,
+      fmt`Webhook URL set to: ${[ellipsis(webhookUrlInput.value), "code"]}`,
       "success"
     );
   }
